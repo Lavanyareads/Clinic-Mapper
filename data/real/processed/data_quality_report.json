@@ -1,0 +1,91 @@
+{
+  "build_version": 2,
+  "community_source": "India Post Pincode Dataset (Branch Offices / Sub-Offices) \u2014 real lat/lon",
+  "note_on_settlements_csv": "india_settlements_population.csv was found to have synthetic coordinates not constrained to correct state boundaries. Replaced with pincode-based communities.",
+  "communities": {
+    "rows": 471,
+    "columns": 18,
+    "missing_pct": {
+      "location_id": 0.0,
+      "village_name": 0.0,
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "population": 0.0,
+      "elderly_population": 0.0,
+      "low_income_population": 0.0,
+      "distance_to_nearest_clinic_km": 0.0,
+      "distance_to_nearest_specialist_km": 0.0,
+      "doctors_available": 0.0,
+      "specialist_available": 0.0,
+      "internet_connectivity": 0.0,
+      "road_accessibility": 0.0,
+      "healthcare_visits": 0.0,
+      "emergency_cases": 0.0,
+      "telemedicine_usage": 0.0,
+      "state": 0.0,
+      "district": 0.0
+    },
+    "geographic_bounds": {
+      "lat_min": 8.57,
+      "lat_max": 34.99447,
+      "lon_min": 70.09,
+      "lon_max": 96.911196
+    },
+    "distance_stats": {
+      "avg_clinic_km": 8.73,
+      "max_clinic_km": 417.38,
+      "avg_specialist_km": 27.39,
+      "max_specialist_km": 1154.06
+    },
+    "real_columns": [
+      "location_id",
+      "latitude",
+      "longitude",
+      "state",
+      "district",
+      "village_name"
+    ],
+    "computed_columns": [
+      "distance_to_nearest_clinic_km (haversine to nearest NIN clinic)",
+      "distance_to_nearest_specialist_km (haversine to nearest NIN specialist)",
+      "population (Census state total / communities in state * lognormal variation)",
+      "elderly_population (Census 2011 60+ fraction * population)",
+      "low_income_population (NFHS insurance non-coverage * population)",
+      "internet_connectivity (NFHS electricity % * 0.7)",
+      "road_accessibility (PMGSY physical completion %)",
+      "doctors_available (govt staffing norms by nearest facility type)",
+      "specialist_available (distance_to_nearest_specialist_km < 50)",
+      "healthcare_visits (population * 0.30)",
+      "emergency_cases (population * 0.02)",
+      "telemedicine_usage (rule-based from connectivity)"
+    ]
+  },
+  "healthcare_facilities": {
+    "rows": 162011,
+    "source": "NIN Health Facilities Dataset \u2014 REAL geocoded facilities",
+    "facility_types": {
+      "SubCentre": 132298,
+      "Primary Health Centre": 21652,
+      "Community Health Center": 4475,
+      "Urban Health Centre": 1421,
+      "Sub-District Hospital": 849,
+      "District Hospital": 591,
+      "Urban Health Posts": 438,
+      "Medical Colleges Hospital": 147,
+      "Civil Hospital/General Hospital": 110,
+      "Women Hospital": 30
+    }
+  },
+  "specialists": {
+    "rows": 6202,
+    "source": "NIN Health Facilities Dataset \u2014 specialist-tier filter",
+    "specialist_types": {
+      "Community Health Center": 4475,
+      "Sub-District Hospital": 849,
+      "District Hospital": 591,
+      "Medical Colleges Hospital": 147,
+      "Civil Hospital/General Hospital": 110,
+      "Women Hospital": 30
+    }
+  }
+}
