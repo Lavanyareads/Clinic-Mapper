@@ -5,6 +5,8 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar
 } from 'recharts';
 import { Activity, Sliders, TrendingUp, Users, ShieldCheck, MapPin } from 'lucide-react';
+import { Card } from '../components/Card';
+import { Button } from '../components/Button';
 
 export default function WhatIfSimulator() {
   const [maxHubs, setMaxHubs] = useState(5);
@@ -94,14 +96,14 @@ export default function WhatIfSimulator() {
       </div>
 
       {/* Control Card */}
-      <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 flex flex-col md:flex-row gap-6 items-end">
+      <Card className="flex flex-col md:flex-row gap-6 items-end">
         <div className="flex-1 space-y-2 w-full">
           <div className="flex justify-between items-center text-xs font-semibold text-slate-700 dark:text-slate-300">
             <label className="flex items-center gap-1.5 uppercase tracking-wider">
-              <Sliders className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+              <Sliders className="w-3.5 h-3.5 text-accent-blue" />
               Simulate Hub Scale
             </label>
-            <span className="text-blue-600 dark:text-blue-400 font-bold text-sm">{maxHubs} Hubs</span>
+            <span className="text-accent-blue font-bold text-sm">{maxHubs} Hubs</span>
           </div>
           <input
             type="range"
@@ -137,28 +139,22 @@ export default function WhatIfSimulator() {
         )}
 
         <div className="flex gap-2 w-full md:w-auto">
-          <button
+          <Button
+            variant={activeTab === 'trend' ? 'primary' : 'secondary'}
             onClick={() => setActiveTab('trend')}
-            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-colors flex-1 md:flex-initial ${
-              activeTab === 'trend'
-                ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
-            }`}
+            className="flex-1 md:flex-initial"
           >
             Scaling Curve
-          </button>
-          <button
+          </Button>
+          <Button
+            variant={activeTab === 'compare' ? 'primary' : 'secondary'}
             onClick={() => setActiveTab('compare')}
-            className={`px-4 py-2 rounded-lg text-xs font-semibold transition-colors flex-1 md:flex-initial ${
-              activeTab === 'compare'
-                ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
-            }`}
+            className="flex-1 md:flex-initial"
           >
             Compare Objectives
-          </button>
+          </Button>
         </div>
-      </div>
+      </Card>
 
       {loading && (
         <div className="flex flex-col items-center justify-center py-16 bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 space-y-3">
@@ -170,18 +166,18 @@ export default function WhatIfSimulator() {
       {/* Dynamic 4 KPIs */}
       {!loading && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white dark:bg-slate-900 p-5 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800">
+          <Card className="p-5">
             <div className="flex items-center gap-2 mb-2">
-              <Users className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              <Users className="w-4 h-4 text-accent-blue" />
               <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Population within coverage</span>
             </div>
             <p className="text-2xl font-bold text-slate-900 dark:text-white">
               {latestData.coverage ? latestData.coverage.toLocaleString() : '—'}
             </p>
             <span className="text-[11px] text-slate-400">At {maxHubs} deployed candidate hubs</span>
-          </div>
+          </Card>
 
-          <div className="bg-white dark:bg-slate-900 p-5 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800">
+          <Card className="p-5">
             <div className="flex items-center gap-2 mb-2">
               <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Vulnerable population coverage</span>
@@ -190,9 +186,9 @@ export default function WhatIfSimulator() {
               {latestData.vulnerable ? latestData.vulnerable.toLocaleString() : '—'}
             </p>
             <span className="text-[11px] text-emerald-600/80 dark:text-emerald-400/80">Elderly & low-income residents</span>
-          </div>
+          </Card>
 
-          <div className="bg-white dark:bg-slate-900 p-5 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800">
+          <Card className="p-5">
             <div className="flex items-center gap-2 mb-2">
               <TrendingUp className="w-4 h-4 text-teal-600 dark:text-teal-400" />
               <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Geographic distance (straight-line)</span>
@@ -201,9 +197,9 @@ export default function WhatIfSimulator() {
               {latestData.improvement ? `-${latestData.improvement.toFixed(1)} km` : '—'}
             </p>
             <span className="text-[11px] text-slate-400">Average reduction per community</span>
-          </div>
+          </Card>
 
-          <div className="bg-white dark:bg-slate-900 p-5 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800">
+          <Card className="p-5">
             <div className="flex items-center gap-2 mb-2">
               <MapPin className="w-4 h-4 text-rose-600 dark:text-rose-400" />
               <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Priority communities remaining</span>
@@ -212,21 +208,21 @@ export default function WhatIfSimulator() {
               {latestData.underserved !== undefined ? latestData.underserved : '—'}
             </p>
             <span className="text-[11px] text-rose-600/80 dark:text-rose-400/80">Villages needing further access</span>
-          </div>
+          </Card>
         </div>
       )}
 
       {/* Trend Analysis View: 2 High-Clarity Charts */}
       {!loading && activeTab === 'trend' && simData.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800">
+          <Card>
             <div className="flex justify-between items-center mb-4">
               <div>
-                <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <Users className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <Users className="w-4 h-4 text-accent-blue" />
                   Population Reach Scaling (Total vs Vulnerable)
                 </h3>
-                <p className="text-[11px] text-slate-400">Cumulative population covered as candidate hubs expand from 1 to {maxHubs}</p>
+                <p className="text-[11px] text-slate-400 mt-1">Cumulative population covered as candidate hubs expand from 1 to {maxHubs}</p>
               </div>
             </div>
             <div className="h-64">
@@ -242,16 +238,16 @@ export default function WhatIfSimulator() {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-          </div>
+          </Card>
 
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800">
+          <Card>
             <div className="flex justify-between items-center mb-4">
               <div>
-                <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
                   <TrendingUp className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                   Geographic Distance Gain & Remaining Underserved
                 </h3>
-                <p className="text-[11px] text-slate-400">Diminishing returns in distance reduction vs remaining priority villages</p>
+                <p className="text-[11px] text-slate-400 mt-1">Diminishing returns in distance reduction vs remaining priority villages</p>
               </div>
             </div>
             <div className="h-64">
@@ -268,14 +264,14 @@ export default function WhatIfSimulator() {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-          </div>
+          </Card>
         </div>
       )}
 
       {/* Comparison View */}
       {!loading && activeTab === 'compare' && compareData.length > 0 && (
-        <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800">
-          <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">
+        <Card>
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
             Policy Objective Comparison at {maxHubs} Hubs: Population-First vs. Equity-First
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">
@@ -295,7 +291,7 @@ export default function WhatIfSimulator() {
               </BarChart>
             </ResponsiveContainer>
           </div>
-        </div>
+        </Card>
       )}
     </div>
   );

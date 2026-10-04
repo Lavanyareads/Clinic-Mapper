@@ -160,12 +160,13 @@ export const apiService = {
     const res = await api.post('/reports/generate');
     return res.data;
   },
-  downloadReport: async (filename: string) => {
-    const res = await api.get(`/reports/download/${filename}`, { responseType: 'blob' });
-    const url = window.URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
+  downloadReport: (filename: string) => {
+    // Native browser download instead of fetching a blob
+    const downloadUrl = `/api/reports/download/${filename}`;
     const link = document.createElement('a');
-    link.href = url;
+    link.href = downloadUrl;
     link.setAttribute('download', filename);
+    link.setAttribute('target', '_blank');
     document.body.appendChild(link);
     link.click();
     link.remove();

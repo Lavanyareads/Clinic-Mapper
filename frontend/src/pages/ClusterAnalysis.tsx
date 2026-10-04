@@ -5,6 +5,8 @@ import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Cell
 } from 'recharts';
 import { Play, Layers, Clock, Sparkles, CheckCircle2, Info } from 'lucide-react';
+import { Card } from '../components/Card';
+import { Button } from '../components/Button';
 
 const CLUSTER_COLORS = ['#0284c7', '#0d9488', '#d97706', '#e11d48', '#7c3aed', '#db2777', '#059669', '#4f46e5'];
 
@@ -96,11 +98,11 @@ export default function ClusterAnalysis() {
       </div>
 
       {/* Interactive Configuration Card */}
-      <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 flex flex-col md:flex-row gap-6 items-end">
+      <Card className="flex flex-col md:flex-row gap-6 items-end">
         <div className="w-full md:w-72 space-y-2">
           <div className="flex justify-between items-center text-xs font-semibold text-slate-700 dark:text-slate-300">
             <label className="uppercase tracking-wider">Number of Clusters (K)</label>
-            <span className="text-blue-600 dark:text-blue-400 font-bold text-sm">K = {kValue}</span>
+            <span className="text-accent-blue font-bold text-sm">K = {kValue}</span>
           </div>
           <input
             type="range"
@@ -119,28 +121,30 @@ export default function ClusterAnalysis() {
         </div>
 
         <div className="flex gap-3 w-full md:w-auto">
-          <button
+          <Button
             onClick={handleDetectK}
             disabled={loading}
-            className="px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors flex items-center disabled:opacity-50 shadow-sm"
+            variant="secondary"
+            className="gap-1.5"
           >
-            <Sparkles className="w-4 h-4 mr-1.5 text-blue-600 dark:text-blue-400" />
+            <Sparkles className="w-4 h-4 text-accent-blue" />
             Auto-Detect Optimal K
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={handleRunClustering}
             disabled={loading}
-            className="px-5 py-2.5 bg-blue-600 text-white text-xs font-semibold rounded-lg hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 transition-colors flex items-center disabled:opacity-50 shadow-sm shadow-blue-500/20"
+            variant="primary"
+            className="gap-1.5"
           >
             {loading ? (
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-1.5"></div>
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
             ) : (
-              <Play className="w-4 h-4 mr-1.5" />
+              <Play className="w-4 h-4" />
             )}
             Run Clustering
-          </button>
+          </Button>
         </div>
-      </div>
+      </Card>
 
       {loading && !clusterResult && (
         <div className="bg-white dark:bg-slate-900 p-12 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 flex flex-col items-center justify-center space-y-3">
@@ -152,17 +156,17 @@ export default function ClusterAnalysis() {
       {/* Elbow & Silhouette Evaluation Curves */}
       {elbowChartData.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800">
-            <div className="flex justify-between items-center mb-3">
+          <Card>
+            <div className="flex justify-between items-center mb-4">
               <div>
-                <h3 className="text-sm font-bold text-slate-900 dark:text-white">Elbow Method (Inertia vs. K)</h3>
-                <p className="text-[11px] text-slate-400">Sum of Squared Errors across cluster centroids</p>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Elbow Method (Inertia vs. K)</h3>
+                <p className="text-xs text-slate-400 mt-1">Sum of Squared Errors across cluster centroids</p>
               </div>
               <span className="text-[11px] font-medium px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
                 Elbow Point: K = {optimalK?.suggested_k || 3}
               </span>
             </div>
-            <div className="h-64">
+            <div className="h-64 mt-2">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={elbowChartData} margin={{ top: 10, right: 20, left: -10, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" opacity={0.5} />
@@ -173,22 +177,22 @@ export default function ClusterAnalysis() {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-2 text-center">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-4 text-center">
               Identifies the point of diminishing marginal return where variance explained stabilizes.
             </p>
-          </div>
+          </Card>
 
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800">
-            <div className="flex justify-between items-center mb-3">
+          <Card>
+            <div className="flex justify-between items-center mb-4">
               <div>
-                <h3 className="text-sm font-bold text-slate-900 dark:text-white">Silhouette Analysis</h3>
-                <p className="text-[11px] text-slate-400">Inter-cluster separation vs. intra-cluster cohesion</p>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Silhouette Analysis</h3>
+                <p className="text-xs text-slate-400 mt-1">Inter-cluster separation vs. intra-cluster cohesion</p>
               </div>
               <span className="text-[11px] font-medium px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
                 Optimal: K = {optimalK?.suggested_k || 3}
               </span>
             </div>
-            <div className="h-64">
+            <div className="h-64 mt-2">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={elbowChartData} margin={{ top: 10, right: 20, left: -10, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" opacity={0.5} />
@@ -206,18 +210,18 @@ export default function ClusterAnalysis() {
                 </BarChart>
               </ResponsiveContainer>
             </div>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-2 text-center">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-4 text-center">
               Higher score indicates well-separated, distinct community accessibility archetypes.
             </p>
-          </div>
+          </Card>
         </div>
       )}
 
       {/* Clustering Results & Summary Banner */}
       {clusterResult && (
         <div className="space-y-6">
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800">
-            <h2 className="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center">
+          <Card>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-5 flex items-center">
               <CheckCircle2 className="w-5 h-5 mr-2 text-emerald-600 dark:text-emerald-400" />
               Segmentation Results for K = {clusterResult.k || kValue}
             </h2>
@@ -307,7 +311,7 @@ export default function ClusterAnalysis() {
                 </div>
               </div>
             )}
-          </div>
+          </Card>
         </div>
       )}
 

@@ -1,5 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
+import LandingPage from './pages/LandingPage';
+import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import DataExplorer from './pages/DataExplorer';
 import ClusterAnalysis from './pages/ClusterAnalysis';
@@ -12,8 +14,9 @@ import Reports from './pages/Reports';
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Navigate to="/overview" replace />} />
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<Login />} />
+      <Route element={<Layout />}>
         <Route path="overview" element={<Dashboard />} />
         <Route path="dashboard" element={<Navigate to="/overview" replace />} />
         <Route path="explore" element={<DataExplorer />} />
@@ -29,7 +32,7 @@ function App() {
         <Route path="research" element={<ResearchMethodology />} />
         <Route path="methodology" element={<Navigate to="/research" replace />} />
         <Route path="reports" element={<Reports />} />
-        <Route path="*" element={<Navigate to="/overview" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
   );

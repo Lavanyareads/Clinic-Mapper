@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BookOpen, AlertCircle, Info, ChevronDown, ChevronRight, Activity, Cpu, Map } from 'lucide-react';
 import apiService from '../services/api';
+import { Card } from '../components/Card';
 
 interface Section {
   title: string;
@@ -15,10 +16,10 @@ interface EquityFormula {
 const ResearchMethodology: React.FC = () => {
   const [methodologySections, setMethodologySections] = useState<Section[]>([]);
   const [expandedSections, setExpandedSections] = useState<Record<number, boolean>>({});
-  
+
   const [metrics, setMetrics] = useState<any>(null);
   const [equityFormula, setEquityFormula] = useState<EquityFormula | null>(null);
-  
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -32,13 +33,13 @@ const ResearchMethodology: React.FC = () => {
           apiService.getResearchMetrics(),
           apiService.getEquityFormula()
         ]);
-        
+
         setMethodologySections(methodologyData.sections || []);
-        
+
         if (methodologyData.sections?.length > 0) {
           setExpandedSections({ 0: true });
         }
-        
+
         setMetrics(metricsData);
         setEquityFormula(equityData);
       } catch (err: any) {
@@ -111,9 +112,9 @@ const ResearchMethodology: React.FC = () => {
           <h2 className="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
             Technical Methodology Documentation
           </h2>
-          
+
           {methodologySections.map((section, index) => (
-            <div key={index} className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 overflow-hidden">
+            <Card key={index} noPadding className="overflow-hidden">
               <button
                 className="w-full px-5 py-4 flex justify-between items-center bg-slate-50/70 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus:outline-none"
                 onClick={() => toggleSection(index)}
@@ -125,18 +126,18 @@ const ResearchMethodology: React.FC = () => {
                   <ChevronRight className="w-4 h-4 text-slate-400" />
                 )}
               </button>
-              
+
               {expandedSections[index] && (
                 <div className="p-5 text-slate-600 dark:text-slate-300 text-xs leading-relaxed border-t border-slate-100 dark:border-slate-800">
                   <div dangerouslySetInnerHTML={{ __html: section.content.replace(/\n/g, '<br/>') }} />
                 </div>
               )}
-            </div>
+            </Card>
           ))}
 
           {/* Equity Formula Display */}
           {equityFormula && (
-            <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 overflow-hidden mt-6">
+            <Card noPadding className="overflow-hidden mt-6">
               <div className="px-5 py-4 bg-teal-50/70 dark:bg-teal-950/40 border-b border-teal-100 dark:border-teal-900">
                 <h3 className="font-bold text-teal-900 dark:text-teal-300 text-sm flex items-center gap-2">
                   <Activity className="w-4 h-4 text-teal-600 dark:text-teal-400" />
@@ -159,7 +160,7 @@ const ResearchMethodology: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Card>
           )}
         </div>
 
@@ -168,11 +169,11 @@ const ResearchMethodology: React.FC = () => {
           <h2 className="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
             Current Empirical Metrics
           </h2>
-          
+
           {metrics ? (
             <>
               {metrics.dataset && (
-                <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 p-5">
+                <Card className="p-5">
                   <h3 className="font-bold text-slate-800 dark:text-slate-200 text-xs flex items-center gap-2 mb-3 uppercase tracking-wider">
                     <Map className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                     Dataset Dimensions
@@ -191,11 +192,11 @@ const ResearchMethodology: React.FC = () => {
                       <span className="font-bold text-blue-600 dark:text-blue-400">Haversine GPS (Straight-line)</span>
                     </div>
                   </div>
-                </div>
+                </Card>
               )}
 
               {metrics.clustering && (
-                <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 p-5">
+                <Card className="p-5">
                   <h3 className="font-bold text-slate-800 dark:text-slate-200 text-xs flex items-center gap-2 mb-3 uppercase tracking-wider">
                     <Cpu className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                     Clustering Model Diagnostics
@@ -218,11 +219,11 @@ const ResearchMethodology: React.FC = () => {
                       <span className="font-bold text-slate-900 dark:text-white">{metrics.clustering.runtime?.toFixed(2)}s</span>
                     </div>
                   </div>
-                </div>
+                </Card>
               )}
 
               {metrics.equity && (
-                <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 p-5">
+                <Card className="p-5">
                   <h3 className="font-bold text-slate-800 dark:text-slate-200 text-xs flex items-center gap-2 mb-3 uppercase tracking-wider">
                     <Activity className="w-4 h-4 text-teal-600 dark:text-teal-400" />
                     Vulnerability Distribution
@@ -243,7 +244,7 @@ const ResearchMethodology: React.FC = () => {
                       </span>
                     </div>
                   </div>
-                </div>
+                </Card>
               )}
             </>
           ) : (

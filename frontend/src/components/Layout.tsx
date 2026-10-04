@@ -30,23 +30,23 @@ export default function Layout() {
   const { isDark, toggleTheme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] dark:bg-[#090d16] text-[#0f172a] dark:text-slate-100 font-sans transition-colors duration-150 flex flex-col antialiased">
+    <div className="min-h-screen bg-background dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300 flex flex-col antialiased">
       {/* Top Navbar */}
-      <header className="sticky top-0 z-50 bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 shadow-2xs">
+      <header className="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-15">
+          <div className="flex items-center justify-between h-20">
             
             {/* Left: Brand Identity */}
             <div className="flex items-center space-x-6">
-              <Link to="/overview" className="flex items-center space-x-2.5 group">
-                <div className="w-8 h-8 rounded-lg bg-[#0f172a] dark:bg-sky-500 text-white flex items-center justify-center shadow-xs">
-                  <Activity className="w-4 h-4 text-sky-400 dark:text-[#0f172a]" />
+              <Link to="/overview" className="flex items-center space-x-3 group">
+                <div className="w-10 h-10 rounded-xl bg-slate-900 dark:bg-accent-blue text-white flex items-center justify-center shadow-sm">
+                  <Activity className="w-5 h-5 text-white" />
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-sm font-bold tracking-tight text-[#0f172a] dark:text-white leading-tight">
+                <div className="flex flex-col justify-center">
+                  <span className="text-base font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
                     ClinicMapper
                   </span>
-                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-normal">
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-medium tracking-normal">
                     Geospatial Intelligence
                   </span>
                 </div>
@@ -60,10 +60,10 @@ export default function Layout() {
                   key={item.to}
                   to={item.to}
                   className={({ isActive }) =>
-                    `px-3 py-1.5 text-xs font-semibold rounded-md transition-all duration-150 ${
+                    `px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-150 ${
                       isActive
-                        ? 'bg-slate-100 dark:bg-slate-800 text-[#0f172a] dark:text-white font-bold shadow-2xs'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-[#0f172a] dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-850'
+                        ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold shadow-sm'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
                     }`
                   }
                 >
@@ -115,7 +115,7 @@ export default function Layout() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f172a] px-4 pt-2 pb-4 space-y-1">
+          <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-2 pb-4 space-y-1">
             {primaryNavItems.map((item) => (
               <NavLink
                 key={item.to}
@@ -151,7 +151,7 @@ export default function Layout() {
       </main>
 
       {/* Subtle Academic Footer */}
-      <footer className="border-t border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#0f172a] py-4 text-center text-xs text-slate-400 dark:text-slate-500">
+      <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-4 text-center text-xs text-slate-500 dark:text-slate-400 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
           <span>ClinicMapper · AI-Powered Geospatial Accessibility & Telemedicine Hub Intelligence</span>
           <div className="flex items-center space-x-4">

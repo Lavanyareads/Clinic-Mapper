@@ -7,16 +7,21 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      },
       colors: {
+        background: '#f8fafc',
         primary: {
-          DEFAULT: '#0ea5e9',
-          light: '#38bdf8',
-          dark: '#0284c7',
+          DEFAULT: '#0f172a',
+          light: '#334155',
+          dark: '#020617',
         },
         accent: {
-          DEFAULT: '#14b8a6',
-          light: '#2dd4bf',
-          dark: '#0d9488',
+          blue: '#0284c7',
+          teal: '#0d9488',
+          amber: '#d97706',
+          rose: '#e11d48',
         }
       }
     },

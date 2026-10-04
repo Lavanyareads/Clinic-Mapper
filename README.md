@@ -25,6 +25,7 @@ Hub Optimization → Before/After Analysis → What-if Simulation
 | Component | Technology |
 |-----------|------------|
 | Frontend | React 18 + TypeScript + Vite + Tailwind CSS + Recharts + React-Leaflet |
+| Design System | Custom UI components (`Card`, `Button`) with dynamic dark mode and modern aesthetic |
 | Backend | Python + FastAPI |
 | ML/Data | Pandas + NumPy + Scikit-learn + SciPy |
 | Database | SQLite (extensible to PostgreSQL/PostGIS) |
@@ -72,7 +73,6 @@ clinic-cluster-mapper/
 │   ├── real/                      # Real government data pipeline
 │   │   ├── build_real_dataset.py  # Data ingestion & distance calculator
 │   │   └── processed/             # Clean output (communities, facilities, specialists)
-│   └── real data zip/             # Original raw source archives
 ├── tests/
 │   ├── test_clustering.py
 │   ├── test_equity.py

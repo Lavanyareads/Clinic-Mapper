@@ -20,6 +20,8 @@ import {
 import { apiService } from '../services/api';
 import toast from 'react-hot-toast';
 import { DashboardStats, MapData } from '../types';
+import { Card, CardHeader } from '../components/Card';
+import { Button } from '../components/Button';
 
 // Fix for default Leaflet icons
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -102,93 +104,97 @@ export default function Dashboard() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            <button
+          <div className="flex items-center gap-3">
+            <Button
               onClick={() => navigate('/map')}
-              className="px-4 py-2 text-xs font-semibold text-white bg-[#0f172a] hover:bg-slate-800 dark:bg-sky-600 dark:hover:bg-sky-500 rounded-lg shadow-xs transition-colors flex items-center gap-1.5"
+              variant="primary"
+              className="gap-2"
             >
-              <Compass className="w-3.5 h-3.5" />
+              <Compass className="w-4 h-4" />
               <span>Explore Full Map</span>
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => navigate('/reports')}
-              className="px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-750 transition-colors flex items-center gap-1.5"
+              variant="secondary"
+              className="gap-2"
             >
-              <FileDown className="w-3.5 h-3.5 text-slate-500" />
+              <FileDown className="w-4 h-4" />
               <span>Export PDF</span>
-            </button>
+            </Button>
           </div>
         </div>
       </div>
 
-      {/* 2. Primary 5 Meaningful Research KPIs (Clean, No fake sparklines) */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-        <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-2xs">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+      {/* 2. Primary 5 Meaningful Research KPIs */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <Card className="p-5">
+          <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
             Population Mapped
           </span>
-          <div className="text-2xl font-bold text-[#0f172a] dark:text-white mt-1">
+          <div className="text-3xl font-extrabold text-slate-900 dark:text-white mt-2">
             {stats?.total_population ? (stats.total_population / 1000000).toFixed(2) + 'M' : '4.70M'}
           </div>
-          <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">
+          <span className="text-xs text-slate-500 dark:text-slate-400 mt-2 block">
             Across 471 settlements
           </span>
-        </div>
+        </Card>
 
-        <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-2xs">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+        <Card className="p-5">
+          <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
             Health Facilities
           </span>
-          <div className="text-2xl font-bold text-[#0f172a] dark:text-white mt-1">
+          <div className="text-3xl font-extrabold text-slate-900 dark:text-white mt-2">
             162,011
           </div>
-          <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">
+          <span className="text-xs text-slate-500 dark:text-slate-400 mt-2 block">
             160K clinics · 6.2K specialists
           </span>
-        </div>
+        </Card>
 
-        <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-2xs">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+        <Card className="p-5">
+          <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">
             Baseline Specialist Dist.
           </span>
-          <div className="text-2xl font-bold text-[#0f172a] dark:text-white mt-1">
+          <div className="text-3xl font-extrabold text-slate-900 dark:text-white mt-2">
             {stats?.avg_specialist_distance ? `${stats.avg_specialist_distance.toFixed(1)} km` : '27.4 km'}
           </div>
-          <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">
+          <span className="text-xs text-slate-500 dark:text-slate-400 mt-2 block">
             Geographic distance (straight-line)
           </span>
-        </div>
+        </Card>
 
-        <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-2xs">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+        <Card className="p-5 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 -mr-4 -mt-4 w-16 h-16 rounded-full bg-amber-500/10 dark:bg-amber-500/5 group-hover:scale-150 transition-transform duration-500 ease-out"></div>
+          <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block relative z-10">
             Priority Underserved
           </span>
-          <div className="text-2xl font-bold text-amber-700 dark:text-amber-400 mt-1">
+          <div className="text-3xl font-extrabold text-amber-600 dark:text-amber-500 mt-2 relative z-10">
             {priorityAreas.length || stats?.underserved_count || 53}
           </div>
-          <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">
+          <span className="text-xs text-slate-500 dark:text-slate-400 mt-2 block relative z-10">
             High demand & remote access
           </span>
-        </div>
+        </Card>
 
-        <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-2xs col-span-2 sm:col-span-1">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+        <Card className="p-5 col-span-2 sm:col-span-1 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 -mr-4 -mt-4 w-16 h-16 rounded-full bg-emerald-500/10 dark:bg-emerald-500/5 group-hover:scale-150 transition-transform duration-500 ease-out"></div>
+          <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider block relative z-10">
             Distance Reduction
           </span>
-          <div className="text-2xl font-bold text-emerald-700 dark:text-emerald-400 mt-1">
+          <div className="text-3xl font-extrabold text-emerald-600 dark:text-emerald-500 mt-2 relative z-10">
             -33.4%
           </div>
-          <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">
+          <span className="text-xs text-slate-500 dark:text-slate-400 mt-2 block relative z-10">
             With 3 hub candidate centers
           </span>
-        </div>
+        </Card>
       </div>
 
       {/* 3. Large India Accessibility Map as Main Visual Centerpiece */}
-      <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-sm overflow-hidden">
-        <div className="p-4 border-b border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+      <Card noPadding className="overflow-hidden">
+        <div className="p-5 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h2 className="text-sm font-bold text-[#0f172a] dark:text-white flex items-center gap-2">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <MapPin className="w-4 h-4 text-sky-600 dark:text-sky-400" />
               National Settlement Accessibility & Facility Coverage Map
             </h2>
@@ -350,14 +356,14 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-      </div>
+      </Card>
 
       {/* 4. Priority Areas & Key Findings Section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Priority Settlements Table */}
-        <div className="lg:col-span-8 bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-2xs p-5">
-          <div className="flex justify-between items-center mb-4">
+        <Card className="lg:col-span-8 p-6">
+          <div className="flex justify-between items-center mb-5">
             <div>
               <h3 className="text-sm font-bold text-[#0f172a] dark:text-white">
                 High-Priority Underserved Settlements
@@ -409,12 +415,12 @@ export default function Dashboard() {
               </tbody>
             </table>
           </div>
-        </div>
+        </Card>
 
         {/* Key Insights & Optimization Impact Summary */}
-        <div className="lg:col-span-4 bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-2xs p-5 flex flex-col justify-between">
+        <Card className="lg:col-span-4 p-6 flex flex-col justify-between">
           <div>
-            <h3 className="text-sm font-bold text-[#0f172a] dark:text-white mb-2 flex items-center gap-1.5">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               Key Geospatial Findings
             </h3>
@@ -447,7 +453,7 @@ export default function Dashboard() {
               <ArrowRight className="w-3 h-3" />
             </button>
           </div>
-        </div>
+        </Card>
       </div>
 
     </div>

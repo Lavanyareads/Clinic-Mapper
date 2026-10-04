@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Database, CheckCircle, FileSpreadsheet, Search, RefreshCw, Layers } from 'lucide-react';
 import { apiService } from '../services/api';
 import toast from 'react-hot-toast';
+import { Card } from '../components/Card';
+import { Button } from '../components/Button';
 
 export default function DataExplorer() {
   const [loading, setLoading] = useState(true);
@@ -95,14 +97,16 @@ export default function DataExplorer() {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <button
+          <Button
             onClick={handleRefresh}
             disabled={refreshing}
-            className="px-3.5 py-1.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-lg hover:bg-slate-50 dark:hover:bg-slate-750 transition-colors flex items-center shadow-sm disabled:opacity-50"
+            variant="outline"
+            size="sm"
+            className="font-semibold"
           >
             <RefreshCw className={`w-3.5 h-3.5 mr-1.5 ${refreshing ? 'animate-spin' : ''}`} />
             {refreshing ? 'Syncing...' : 'Reload Data'}
-          </button>
+          </Button>
           <span className="bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-semibold px-3 py-1 rounded-full flex items-center shadow-sm">
             <CheckCircle className="w-3.5 h-3.5 mr-1.5 text-emerald-600 dark:text-emerald-400" /> REAL DATASET ACTIVE
           </span>
@@ -110,9 +114,9 @@ export default function DataExplorer() {
       </div>
 
       {/* Dataset Sources & Summary Banner */}
-      <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800">
-        <h2 className="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center">
-          <Database className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-2" />
+      <Card className="p-6">
+        <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-5 flex items-center">
+          <Database className="w-5 h-5 text-accent-blue mr-2" />
           Active Real Data Sources
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -146,13 +150,13 @@ export default function DataExplorer() {
             </p>
           </div>
         </div>
-      </div>
+      </Card>
 
       {/* Quality & Summary Stats Cards */}
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800">
-            <h2 className="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center">
+          <Card className="p-6">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-5 flex items-center">
               <CheckCircle className="w-5 h-5 text-emerald-500 mr-2" />
               Data Integrity & Quality Score
             </h2>
@@ -183,11 +187,11 @@ export default function DataExplorer() {
                 </div>
               </div>
             )}
-          </div>
+          </Card>
 
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800">
-            <h2 className="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center">
-              <Layers className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-2" />
+          <Card className="p-6">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-5 flex items-center">
+              <Layers className="w-5 h-5 text-accent-blue mr-2" />
               Dataset Dimensions & Geometry
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -222,17 +226,17 @@ export default function DataExplorer() {
                 </span>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
       )}
 
       {/* Dataset Preview Table */}
       {preview && (
-        <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 overflow-hidden">
-          <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <Card noPadding className="overflow-hidden">
+          <div className="p-6 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center">
-                <FileSpreadsheet className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-2" />
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center">
+                <FileSpreadsheet className="w-5 h-5 text-accent-blue mr-2" />
                 Dataset Records Preview
               </h2>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -285,7 +289,7 @@ export default function DataExplorer() {
               No matching records found for "{searchTerm}"
             </div>
           )}
-        </div>
+        </Card>
       )}
     </div>
   );

@@ -1,2 +1,29 @@
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.*
+frontend/.eslintcache
 
-data/real data zip/*.zip
+# Python / Backend
+backend/venv/
+backend/__pycache__/
+backend/.pytest_cache/
+*.pyc
+*.pyo
+*.pyd
+
+# Database
+backend/clinic_mapper.db
+*.sqlite3
+
+# Reports
+backend/reports_output/
+*.pdf
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Other
+data/real data zip/

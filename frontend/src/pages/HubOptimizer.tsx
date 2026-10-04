@@ -3,6 +3,8 @@ import { apiService } from '../services/api';
 import { HubOptimizationResult, HubExplanation } from '../types';
 import toast from 'react-hot-toast';
 import { Play, ChevronDown, ChevronUp, MapPin, Users, TrendingUp, Clock, Sparkles, ShieldCheck } from 'lucide-react';
+import { Card } from '../components/Card';
+import { Button } from '../components/Button';
 
 export default function HubOptimizer() {
   const [nHubs, setNHubs] = useState(3);
@@ -79,11 +81,11 @@ export default function HubOptimizer() {
       </div>
 
       {/* Control Card */}
-      <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 flex flex-col md:flex-row gap-6 items-end">
+      <Card className="flex flex-col md:flex-row gap-6 items-end">
         <div className="flex-1 space-y-2 w-full">
           <div className="flex justify-between items-center text-xs font-semibold text-slate-700 dark:text-slate-300">
             <span className="uppercase tracking-wider">Number of Hub Candidates</span>
-            <span className="text-blue-600 dark:text-blue-400 font-bold text-sm">{nHubs} Hubs</span>
+            <span className="text-accent-blue font-bold text-sm">{nHubs} Hubs</span>
           </div>
           <input 
             type="range" min="1" max="10" value={nHubs} 
@@ -107,7 +109,7 @@ export default function HubOptimizer() {
             <button
               className={`flex-1 py-2 text-xs font-semibold rounded-md transition-all ${
                 mode === 'equity' 
-                  ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' 
+                  ? 'bg-white dark:bg-slate-700 text-accent-blue shadow-sm' 
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
               onClick={() => setMode('equity')}
@@ -117,7 +119,7 @@ export default function HubOptimizer() {
             <button
               className={`flex-1 py-2 text-xs font-semibold rounded-md transition-all ${
                 mode === 'population' 
-                  ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' 
+                  ? 'bg-white dark:bg-slate-700 text-accent-blue shadow-sm' 
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
               onClick={() => setMode('population')}
@@ -127,10 +129,11 @@ export default function HubOptimizer() {
           </div>
         </div>
 
-        <button
+        <Button
           onClick={runOptimization}
           disabled={loading}
-          className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white px-6 py-2.5 rounded-lg text-xs font-semibold disabled:opacity-50 flex items-center justify-center gap-2 transition-colors w-full md:w-auto shadow-sm shadow-blue-500/20"
+          variant="primary"
+          className="w-full md:w-auto justify-center gap-2"
         >
           {loading ? (
             <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
@@ -138,15 +141,15 @@ export default function HubOptimizer() {
             <Play size={15} />
           )}
           <span>{loading ? 'Optimizing...' : 'Run Optimization'}</span>
-        </button>
-      </div>
+        </Button>
+      </Card>
 
       {result && (
         <div className="space-y-6">
           {/* Top Summary Concise KPI Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-white dark:bg-slate-900 p-5 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 flex items-center gap-4">
-              <div className="p-3 bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 rounded-xl">
+            <Card className="p-5 flex items-center gap-4">
+              <div className="p-3 bg-blue-50 dark:bg-blue-950/60 text-accent-blue rounded-xl">
                 <Users size={22} />
               </div>
               <div>
@@ -155,9 +158,9 @@ export default function HubOptimizer() {
                   {result.overall_metrics?.total_pop_covered?.toLocaleString() || 0}
                 </p>
               </div>
-            </div>
+            </Card>
 
-            <div className="bg-white dark:bg-slate-900 p-5 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 flex items-center gap-4">
+            <Card className="p-5 flex items-center gap-4">
               <div className="p-3 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 rounded-xl">
                 <ShieldCheck size={22} />
               </div>
@@ -167,9 +170,9 @@ export default function HubOptimizer() {
                   {result.overall_metrics?.vulnerable_pop_covered?.toLocaleString() || 0}
                 </p>
               </div>
-            </div>
+            </Card>
 
-            <div className="bg-white dark:bg-slate-900 p-5 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 flex items-center gap-4">
+            <Card className="p-5 flex items-center gap-4">
               <div className="p-3 bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400 rounded-xl">
                 <TrendingUp size={22} />
               </div>
@@ -179,9 +182,9 @@ export default function HubOptimizer() {
                   {result.overall_metrics?.avg_improvement ? `-${result.overall_metrics.avg_improvement.toFixed(1)} km` : 'N/A'}
                 </p>
               </div>
-            </div>
+            </Card>
 
-            <div className="bg-white dark:bg-slate-900 p-5 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 flex items-center gap-4">
+            <Card className="p-5 flex items-center gap-4">
               <div className="p-3 bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 rounded-xl">
                 <Clock size={22} />
               </div>
@@ -191,7 +194,7 @@ export default function HubOptimizer() {
                   {result.runtime_seconds ? `${result.runtime_seconds.toFixed(2)}s` : '< 1s'}
                 </p>
               </div>
-            </div>
+            </Card>
           </div>
 
           {/* Recommended Candidates Grid */}
@@ -206,7 +209,7 @@ export default function HubOptimizer() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {result.hub_locations?.map((hub, idx) => (
-                <div key={idx} className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-800 overflow-hidden flex flex-col justify-between">
+                <Card key={idx} noPadding className="overflow-hidden flex flex-col justify-between">
                   <div className="p-5 space-y-3">
                     <div className="flex justify-between items-start">
                       <div className="flex items-center gap-2.5">
@@ -275,7 +278,7 @@ export default function HubOptimizer() {
                       )}
                     </div>
                   </div>
-                </div>
+                </Card>
               ))}
             </div>
           </div>
